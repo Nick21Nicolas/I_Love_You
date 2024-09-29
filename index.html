@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You</title>
+    <link rel="icon" type="image/png" href="https://www.freeiconspng.com/thumbs/heart-icon/valentine-heart-icon-6.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url('https://wallpapers.com/images/hd/country-couple-pictures-aqz6jnioqnxfhsjk.jpg'); /* Substitua pela URL da sua imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+
+        #footer {
+            position: relative;
+            bottom: -60px;
+            left: 0;
+            width: 100%;
+            background-color: #292929;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            transition: bottom 0.3s;
+        }
+
+        #footer.show-footer {
+            bottom: 0;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente para melhorar a legibilidade */
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        #nós, #infancia, #legado, #music-player {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente para as seções */
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            position: relative;
+            min-width: 250px;
+            min-height: 120px;
+            background: #191414;
+            border-radius: 10px;
+            padding: .8rem;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            box-shadow: 0 10px 40px -25px rgba(100, 100, 100, .5);
+            margin: 20px auto;
+            width: calc(100% - 40px);
+            max-width: 600px;
+        }
+
+        .top {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-block-end: .5rem;
+        }
+
+        .pfp {
+            position: relative;
+            height: 40px;
+            width: 40px;
+            background-color: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .title-1 {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 900;
+        }
+
+        .title-2 {
+            color: white;
+            font-size: .75rem;
+            opacity: .8;
+        }
+
+        .song-time {
+            width: 100%;
+            margin-inline: auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: .3rem;
+        }
+
+        .time {
+            width: 90%;
+            background-color: #5e5e5e;
+            height: .35rem;
+            border-radius: 3px;
+        }
+
+        .elapsed {
+            width: 42%;
+            background-color: #1db954;
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .controls {
+            color: white;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 100%;
+        }
+
+        .volume {
+            height: 100%;
+            width: 48px;
+        }
+
+        .air {
+            height: 100%;
+            width: 48px;
+        }
+
+        .controls svg {
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .controls svg:hover {
+            color: #1db954;
+        }
+
+        .controls .heart:hover {
+            color: pink;
+        }
+
+        .volume {
+            opacity: 0;
+            position: relative;
+            transition: 0.2s;
+        }
+
+        .volume .slider {
+            height: 4px;
+            background-color: #5e5e5e;
+            width: 80%;
+            border-radius: 2px;
+            margin-left: .3rem;
+        }
+
+        .volume .slider .green {
+            background-color: #1db954;
+            height: 100%;
+            width: 80%;
+            border-radius: 3px;
+        }
+
+        .volume .circle {
+            background-color: white;
+            height: 6px;
+            width: 6px;
+            border-radius: 3px;
+            position: absolute;
+            right: 20%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .volume_button:hover ~ .volume {
+            opacity: 1;
+        }
+
+        .timetext {
+            color: white;
+        }
+
+        .time_now {
+            font-size: .8rem;
+            background-color: #00000060;
+            padding: .5rem;
+            border-radius: .5rem;
+            background-blend-mode: multiply;
+        }
+
+        .time_full {
+            font-size: .8rem;
+            background-color: #00000060;
+            padding: .5rem;
+            border-radius: .5rem;
+            background-blend-mode: multiply;
+        }
+
+        .playing {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            gap: 1px;
+            width: 30px;
+            height: 20px;
+        }
+
+        .greenline {
+            background-color: #1db954;
+            height: 20px;
+            width: 2px;
+            position: relative;
+            transform-origin: bottom;
+        }
+
+        .line-1 {
+            animation: infinite playing 1s ease-in-out;
+            animation-delay: 0.2s;
+        }
+
+        .line-2 {
+            animation: infinite playing 1s ease-in-out;
+            animation-delay: 0.5s;
+        }
+
+        .line-3 {
+            animation: infinite playing 1s ease-in-out;
+            animation-delay: 0.6s;
+        }
+
+        .line-4 {
+            animation: infinite playing 1s ease-in-out;
+            animation-delay: 0s;
+        }
+
+        .line-5 {
+            animation: infinite playing 1s ease-in-out;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes playing {
+            0% {
+                transform: scaleY(0.1);
+            }
+
+            33% {
+                transform: scaleY(0.6);
+            }
+
+            66% {
+                transform: scaleY(0.9);
+            }
+
+            100% {
+                transform: scaleY(0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>I Love You</h1>
+        <nav>
+            <ul>
+                <li><a href="#Nós">Nós</a></li>
+                <li><a href="frases.html">Frases</a></li>
+                <li><a href="galeria.html">Galeria</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="nós">
+            <h2>Our love...</h2>
+            <p> Meu amor por você é intenso e recíproco, como uma chama que nunca se apaga. Cada momento ao seu lado é uma oportunidade de celebrar a nossa conexão única. Seu sorriso ilumina meus dias e sua presença traz paz ao meu coração. Juntos, enfrentamos desafios e sonhamos alto, sempre apoiando um ao outro. A cumplicidade que compartilhamos transforma tudo em uma linda jornada. Com você, aprendi que o amor verdadeiro é leve, profundo e extraordinário.</p>
+        </section>
+
+            <section id="infancia">
+                <h2>Thank you until now, because we will be eternity...</h2>
+                <p> Quero que você saiba meu amor, que nosso amor é eterno. A cada dia que passa, sinto que somos mais um e outro amor, como se nossos corações batessem em um só ritmo. Você é a luz da minha vida e a razão do meu sorriso. Juntos, vamos construir memórias que durarão para sempre, porque o que sentimos um pelo outro não tem fim. Eu amo você mais do que palavras podem expressar, e prometo que estarei ao seu lado para sempre minha momoh incrive, linda, perfeita, maravilhosa.
+                </p>
+            </section>
+
+            <section id="legado">
+                <h2>Time is our love...</h2>
+                <p>Nosso amor é como o tempo: eterno e sempre em movimento. Cada momento ao seu lado, a cada conversa é precioso, e juntos estamos construindo uma história que nunca vai se apagar. Assim como o tempo, nosso amor se renova a cada dia, trazendo novas experiências e sorrisos. Eu te amoo muitãooooo mesmo amor ontem, hoje, amanhã e para sempre, para toda a eternidade minha linda…</p>
+            </section>
+            <section id="music-player">
+                <h3>Our songs:</h3>
+                <div class="card">
+                    <div class="top">
+                        <div class="pfp">
+                            <img src="https://i.ebayimg.com/images/g/mWEAAOSwjR5h33ww/s-l1200.webp" alt="Album Cover" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div>
+                            <div class="title-1">Elvis Presley - Can't help falling in love</div>
+                            <div class="title-2">🎶</div>
+                        </div>
+                    </div>
+                    <audio controls style="width: 100%;">
+                        <source src="Elvis Presley - Can't Help Falling In Love (Official Audio).mp3" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                </div>
+                <div class="card">
+                    <div class="top">
+                        <div class="pfp">
+                            <img src="https://http2.mlstatic.com/D_NQ_NP_760259-MLB42603163071_072020-O.webp" alt="Album Cover" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div>
+                            <div class="title-1">Jorge & Mateus - Duas Metades</div>
+                            <div class="title-2">🎶</div>
+                        </div>
+                    </div>
+                    <audio controls style="width: 100%;">
+                        <source src="Jorge & Mateus - Duas Metades - [Novo DVD Live in London] - (Clipe Oficial).mp3" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                </div>
+                <div class="card">
+                    <div class="top">
+                        <div class="pfp">
+                            <img src="data:image/jpeg;base64,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" alt="Album Cover" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div>
+                            <div class="title-1">Arctic Monkeys - I Wanna Be Yours</div>
+                            <div class="title-2">🎶</div>
+                        </div>
+                    </div>
+                    <audio controls style="width: 100%;">
+                        <source src="I Wanna Be Yours.mp3" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                </div>
+            </section>            
+        </section>
+    </main>
+    <footer id="footer">
+        <p>&copy; 2024 Nosso Amorrr pra toda eternidade meu Amorrr.</p>
+    </footer>
+
+    <script>
+        let lastScrollTop = 0;
+
+        document.addEventListener('scroll', function() {
+            const footer = document.getElementById('footer');
+            const currentScroll = window.scrollY;
+            
+            if (currentScroll > lastScrollTop) {
+                footer.classList.add('show-footer');
+            } else {
+                footer.classList.remove('show-footer');
+            }
+            
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        });
+    </script>
+</body>
+</html>
